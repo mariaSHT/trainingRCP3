@@ -15,6 +15,13 @@
             icon="icons/Rentals.png"
             restorable="true">
       </view>
+      <view
+            category="com.sogeti.rental.ui"
+            class="com.sogeti.rental.ui.RentalAgencyView"
+            id="com.sogeti.rental.ui.views.rentalAgencyView"
+            name="Rental Agency View"
+            restorable="true">
+      </view>
    </extension>
 
 </plugin>

@@ -30,20 +30,22 @@ public class RentalPropertyView extends ViewPart {
 		parent.setLayout(new GridLayout(1, false));
 		
 		Group infoGroup = new Group(parent, SWT.NONE);
+		infoGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		infoGroup.setText("Informations");
 		infoGroup.setLayout(new GridLayout(2, false));
 		
-		rentedObjectLabel = new Label(infoGroup, SWT.BORDER);
+		rentedObjectLabel = new Label(infoGroup, SWT.NONE);
 		GridData gd = new GridData();
 		gd.horizontalSpan = 2;
 		gd.horizontalAlignment = SWT.DM_FILL_BACKGROUND;
 		rentedObjectLabel.setLayoutData(gd);
 		
-		Text whoText = new Text(infoGroup, SWT.BORDER);
+		Text whoText = new Text(infoGroup, SWT.READ_ONLY);
 		whoText.setText("Loué à:");
-		whoLabel = new Label(infoGroup, SWT.BORDER);
+		whoLabel = new Label(infoGroup, SWT.NONE);
 		
 		Group grpDatesDeLocation = new Group(parent, SWT.NONE);
+		grpDatesDeLocation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		grpDatesDeLocation.setText("Dates de location");
 		grpDatesDeLocation.setLayout(new GridLayout(2, false));
 		
