@@ -8,6 +8,15 @@ import org.eclipse.ui.part.ViewPart;
 
 import com.opcoach.training.rental.RentalAgency;
 import com.sogeti.rental.core.RentalActivator;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.layout.GridData;
 
 public class RentalAgencyView extends ViewPart {
 	
@@ -21,7 +30,48 @@ public class RentalAgencyView extends ViewPart {
 
 	@Override
 	public void createPartControl(Composite parent) {
+		parent.setLayout(new GridLayout(1, false));
+		
+		Button btnCollapseAll = new Button(parent, SWT.CHECK);
+		btnCollapseAll.setText("Collapse All");
+		
+		btnCollapseAll.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				treeViewer.collapseAll();
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		Button btnExpandAll = new Button(parent, SWT.CHECK);
+		btnExpandAll.setText("Expend All");
+		btnExpandAll.setToolTipText("Expand All");
+		
+		btnExpandAll.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				treeViewer.expandAll();
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		treeViewer = new TreeViewer(parent);
+		Tree tree = treeViewer.getTree();
+		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		RentalProvider provider = new RentalProvider();
 		
 		treeViewer.setContentProvider(provider);
@@ -32,7 +82,8 @@ public class RentalAgencyView extends ViewPart {
 		agencies.add(RentalActivator.getAgency());
 		
 		treeViewer.setInput(agencies);
-		treeViewer.expandAll();
+		
+		getSite().setSelectionProvider(treeViewer);
 	}
 
 	@Override
@@ -40,4 +91,5 @@ public class RentalAgencyView extends ViewPart {
 		// TODO Auto-generated method stub
 
 	}
+	
 }
