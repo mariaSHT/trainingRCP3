@@ -7,6 +7,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 
 import com.opcoach.training.rental.Rental;
@@ -16,6 +17,8 @@ public class RentalPropertyView extends ViewPart {
 	
 	private Label rentedObjectLabel;
 
+	private Label whoLabel;
+	
 	public RentalPropertyView() {
 		// TODO Auto-generated constructor stub
 	}
@@ -34,8 +37,13 @@ public class RentalPropertyView extends ViewPart {
 		gd.horizontalAlignment = SWT.DM_FILL_BACKGROUND;
 		rentedObjectLabel.setLayoutData(gd);
 		
-	
+		Text whoText = new Text(infoGroup, SWT.BORDER);
+		whoText.setText("Loué à:");
+		whoLabel = new Label(infoGroup, SWT.BORDER);
+
+		
 		setRental(RentalActivator.getAgency().getRentals().get(0));
+		setCustomer(RentalActivator.getAgency().getRentals().get(0));
 	}
 
 	@Override
@@ -46,6 +54,10 @@ public class RentalPropertyView extends ViewPart {
 
 	private void setRental(Rental r) {
 		rentedObjectLabel.setText(r.getRentedObject().getName());
+	}
+	
+	private void setCustomer(Rental r) {
+		whoLabel.setText(r.getCustomer().getFirstName() + " " + r.getCustomer().getLastName());
 	}
 	
 }
