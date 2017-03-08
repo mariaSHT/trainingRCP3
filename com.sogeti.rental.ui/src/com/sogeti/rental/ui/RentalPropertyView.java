@@ -18,6 +18,8 @@ public class RentalPropertyView extends ViewPart {
 	private Label rentedObjectLabel;
 
 	private Label whoLabel;
+	private Label labelDuDate;
+	private Label labelAuDate;
 	
 	public RentalPropertyView() {
 		// TODO Auto-generated constructor stub
@@ -40,10 +42,29 @@ public class RentalPropertyView extends ViewPart {
 		Text whoText = new Text(infoGroup, SWT.BORDER);
 		whoText.setText("Loué à:");
 		whoLabel = new Label(infoGroup, SWT.BORDER);
+		
+		Group grpDatesDeLocation = new Group(parent, SWT.NONE);
+		grpDatesDeLocation.setText("Dates de location");
+		grpDatesDeLocation.setLayout(new GridLayout(2, false));
+		
+		Label lblDu = new Label(grpDatesDeLocation, SWT.NONE);
+		lblDu.setSize(20, 20);
+		lblDu.setText("du:");
+		
+		labelDuDate = new Label(grpDatesDeLocation, SWT.NONE);
+		labelDuDate.setSize(0, 20);
+		
+		Label lblAu = new Label(grpDatesDeLocation, SWT.NONE);
+		lblAu.setText("au:");
+		
+		labelAuDate = new Label(grpDatesDeLocation, SWT.NONE);
+		labelAuDate.setSize(0, 20);
 
 		
 		setRental(RentalActivator.getAgency().getRentals().get(0));
 		setCustomer(RentalActivator.getAgency().getRentals().get(0));
+		setDuDate(RentalActivator.getAgency().getRentals().get(0));
+		setAuDate(RentalActivator.getAgency().getRentals().get(0));
 	}
 
 	@Override
@@ -60,4 +81,11 @@ public class RentalPropertyView extends ViewPart {
 		whoLabel.setText(r.getCustomer().getFirstName() + " " + r.getCustomer().getLastName());
 	}
 	
+	private void setDuDate(Rental r) {
+		labelDuDate.setText(r.getStartDate().toString());
+	}
+	
+	private void setAuDate(Rental r) {
+		labelAuDate.setText(r.getEndDate().toString());
+	}
 }
