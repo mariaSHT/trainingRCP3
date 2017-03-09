@@ -2,30 +2,31 @@ package com.sogeti.rental.ui;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.part.ViewPart;
 
 import com.opcoach.training.rental.RentalAgency;
 import com.sogeti.rental.core.RentalActivator;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.ControlListener;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.layout.GridData;
 
-public class RentalAgencyView extends ViewPart {
+public class RentalAgencyView extends ViewPart implements IPropertyChangeListener {
 	
 	private TreeViewer treeViewer;
 	
 	public static final Object[] EMPTY_RESULT = new Object[0];
 
 	public RentalAgencyView() {
-		// TODO Auto-generated constructor stub
+		RentalUIActivator.getDefault().getPreferenceStore().addPropertyChangeListener(this);
 	}
 
 	@Override
@@ -88,8 +89,15 @@ public class RentalAgencyView extends ViewPart {
 
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
+		// Do nothing
 
 	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent event) {
+		treeViewer.refresh();
+		
+	}
+
 	
 }

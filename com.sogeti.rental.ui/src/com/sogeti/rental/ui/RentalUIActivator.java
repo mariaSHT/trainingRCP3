@@ -1,7 +1,11 @@
 package com.sogeti.rental.ui;
 
+import org.eclipse.jface.resource.ColorRegistry;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
+import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.resource.StringConverter;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -59,5 +63,23 @@ public class RentalUIActivator extends AbstractUIPlugin implements RentalUIConst
 		reg.put(IMG_RENTAL, ImageDescriptor.createFromURL(b.getEntry(IMG_RENTAL)));
 		reg.put(IMG_OBJECT, ImageDescriptor.createFromURL(b.getEntry(IMG_OBJECT)));
 		reg.put(IMG_AGENCY, ImageDescriptor.createFromURL(b.getEntry(IMG_AGENCY)));
+	}
+	
+	public Color getColor(String key) {
+		
+		if (key.isEmpty()) {
+			return null;
+		}
+		
+		ColorRegistry cR = JFaceResources.getColorRegistry();
+		
+		Color col = cR.get(key);
+		
+		if (col == null) {
+			cR.put(key, StringConverter.asRGB(key));
+			col = cR.get(key);
+		}
+		
+		return col;
 	}
 }

@@ -6,16 +6,14 @@ import java.util.Collection;
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
 
 import com.opcoach.training.rental.Customer;
 import com.opcoach.training.rental.Rental;
 import com.opcoach.training.rental.RentalAgency;
 import com.opcoach.training.rental.RentalObject;
-import com.opcoach.training.rental.RentalPackage;
+import com.sogeti.rental.ui.pref.RentalColorPreferences;
 
 class RentalProvider extends LabelProvider implements ITreeContentProvider, IColorProvider, RentalUIConstant {
 
@@ -95,15 +93,48 @@ class RentalProvider extends LabelProvider implements ITreeContentProvider, ICol
 		else if (element instanceof Rental) {
 			return RentalUIActivator.getDefault().getImageRegistry().get(IMG_RENTAL);
 		}
-//		else if (element instanceof RentalNode) {
-//			return niu
-//		}
 
 		return super.getImage(element);
 	}
 	
 	
 	 class RentalNode {
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + getOuterType().hashCode();
+			result = prime * result + ((label == null) ? 0 : label.hashCode());
+			result = prime * result + ((rentalAgency == null) ? 0 : rentalAgency.hashCode());
+			return result;
+		}
+		
+// Les methodes equals and hashcode permettent de ne pas avoir les noeuds qui collapsent quand on fait un refresh
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			RentalNode other = (RentalNode) obj;
+			if (!getOuterType().equals(other.getOuterType()))
+				return false;
+			if (label == null) {
+				if (other.label != null)
+					return false;
+			} else if (!label.equals(other.label))
+				return false;
+			if (rentalAgency == null) {
+				if (other.rentalAgency != null)
+					return false;
+			} else if (!rentalAgency.equals(other.rentalAgency))
+				return false;
+			return true;
+		}
+
+
 		protected static final String CUSTOMERS = "Clients";
 		protected static final String LOCATIONS = "Locations";
 		protected static final String OBJETCS = "Objets à louer";
@@ -137,6 +168,10 @@ class RentalProvider extends LabelProvider implements ITreeContentProvider, ICol
 			return label;
 		}
 
+		private RentalProvider getOuterType() {
+			return RentalProvider.this;
+		}
+
 		
 	}
 
@@ -144,14 +179,20 @@ class RentalProvider extends LabelProvider implements ITreeContentProvider, ICol
 	@Override
 	public Color getForeground(Object element) {
 		if (element instanceof Customer) {
-			return Display.getCurrent().getSystemColor(SWT.COLOR_CYAN);
+
+			String lColorV = RentalUIActivator.getDefault().getPreferenceStore().getString(RentalColorPreferences.PREF_CUSTOMERCOLOR);
+			Color lColor = RentalUIActivator.getDefault().getColor(lColorV);
+			return lColor;
 		}
 		else if (element instanceof RentalObject) {
-			
-			return Display.getCurrent().getSystemColor(SWT.COLOR_GREEN);
+			String lColorVR = RentalUIActivator.getDefault().getPreferenceStore().getString(RentalColorPreferences.PREF_OBJECTSCOLOR);
+			Color lColorR = RentalUIActivator.getDefault().getColor(lColorVR);
+			return lColorR;
 		}
-		else if (element instanceof RentalObject) {
-			return Display.getCurrent().getSystemColor(SWT.COLOR_YELLOW);
+		else if (element instanceof Rental) {
+			String lColorV = RentalUIActivator.getDefault().getPreferenceStore().getString(RentalColorPreferences.PREF_RENTALCOLOR);
+			Color lColor = RentalUIActivator.getDefault().getColor(lColorV);
+			return lColor;
 		}
 		
 		return null;
