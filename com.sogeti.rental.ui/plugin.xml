@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension-point id="palette" name="palette" schema="schema/palette.exsd"/>
    <extension
          point="org.eclipse.ui.views">
       <category
@@ -113,6 +114,19 @@
             class="com.sogeti.rental.ui.handlers.DisplayHandler"
             commandId="com.sogeti.rental.ui.commands.displayCommand">
       </handler>
+   </extension>
+   <extension
+         point="com.sogeti.rental.ui.palette">
+      <palette
+            id="com.sogeti.rental.ui.paletteDefault"
+            name="Default Palette"
+            paletteClass="com.sogeti.rental.ui.palette.DefaultPalette">
+      </palette>
+      <palette
+            id="com.sogeti.rental.ui.paletteMoche"
+            name="Moche Palette"
+            paletteClass="com.sogeti.rental.ui.palette.PaletteMochePalette">
+      </palette>
    </extension>
 
 </plugin>

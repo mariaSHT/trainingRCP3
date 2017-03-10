@@ -1,5 +1,9 @@
 package com.sogeti.rental.ui;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
@@ -8,6 +12,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.StringConverter;
+import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.Bundle;
@@ -25,23 +30,50 @@ public class RentalUIActivator extends AbstractUIPlugin implements RentalUIConst
 	// The shared instance
 	private static RentalUIActivator plugin;
 	
+	private Map<String, PaletteDescriptor> paletteMap;
+	
 	/**
 	 * The constructor
 	 */
 	public RentalUIActivator() {
+		paletteMap = new HashMap<>();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
 	 */
+	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 		
-		readViewExt();
+		readPaletteExt();
 	}
 
+	private void readPaletteExt() {
+		// Mettre un mecanisme pour charger
+		IExtensionRegistry reg = Platform.getExtensionRegistry();
+		
+		for (IConfigurationElement e : reg.getConfigurationElementsFor("com.sogeti.rental.ui.palette")) {
+			
+				PaletteDescriptor pd = new PaletteDescriptor();
+				pd.setName(e.getAttribute("name"));
+				pd.setId(e.getAttribute("id"));
+				IColorProvider lIC;
+				try {
+					lIC = (IColorProvider) e.createExecutableExtension("paletteClass");
+					pd.setCp(lIC);
+				} catch (CoreException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				
+				paletteMap.put(e.getAttribute("id"), pd);
+		}
+	}
+	
 	private void readViewExt() {
 		// Mettre un mecanisme pour charger
 		IExtensionRegistry reg = Platform.getExtensionRegistry();
@@ -57,6 +89,7 @@ public class RentalUIActivator extends AbstractUIPlugin implements RentalUIConst
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
+	@Override
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
