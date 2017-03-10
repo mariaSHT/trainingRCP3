@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="palette" name="palette" schema="schema/palette.exsd"/>
+   <extension-point id="palette" name="%extension-point.name" schema="schema/palette.exsd"/>
    <extension
          point="org.eclipse.ui.views">
       <category
             id="com.sogeti.rental.ui"
-            name="Rental">
+            name="%category.name">
       </category>
       <view
             category="com.sogeti.rental.ui"
             class="com.sogeti.rental.ui.RentalPropertyView"
             id="com.sogeti.rental.ui.views.rentalView"
-            name="Rental Property View"
+            name="%view.name"
             icon="icons/Rentals.png"
             restorable="true">
       </view>
@@ -21,7 +21,7 @@
             class="com.sogeti.rental.ui.RentalAgencyView"
             icon="icons/Agency.png"
             id="com.sogeti.rental.ui.views.rentalAgencyView"
-            name="Rental Agency View"
+            name="%view.name.0"
             restorable="true">
       </view>
    </extension>
@@ -31,7 +31,7 @@
             class="com.sogeti.rental.ui.perspective.RentalPerspective"
             icon="icons/Agency.png"
             id="com.sogeti.rental.ui.perspective.RentalPerspective"
-            name="Rental">
+            name="%perspective.name">
       </perspective>
    </extension>
    <extension
@@ -40,7 +40,13 @@
             category="com.sogeti.rental.preferences"
             class="com.sogeti.rental.ui.pref.RentalColorPreferences"
             id="com.sogeti.rental.ui.colorprefpage"
-            name="Colors">
+            name="%page.name">
+      </page>
+      <page
+            category="com.sogeti.rental.preferences"
+            class="com.sogeti.rental.ui.pref.RentalColorPreferences"
+            id="com.sogeti.rental.ui.rentalcolorprefpage"
+            name="%page.name.0">
       </page>
    </extension>
    <extension
@@ -55,10 +61,10 @@
             allPopups="true"
             locationURI="menu:org.eclipse.ui.main.menu?after=additions">
          <menu
-               label="MyMenu">
+               label="%menu.label">
             <command
                   commandId="com.sogeti.rental.ui.commands.displayCommand"
-                  label="Hello World"
+                  label="%command.label"
                   style="push">
             </command>
          </menu>
@@ -68,7 +74,7 @@
             locationURI="popup:com.sogeti.rental.ui.views.rentalAgencyView?after=additions">
          <command
                commandId="com.sogeti.rental.ui.commands.displayCommand"
-               label="Hello World"
+               label="%command.label.0"
                style="push">
          </command>
       </menuContribution>
@@ -77,7 +83,7 @@
             locationURI="menu:org.eclipse.ui.views.ResourceNavigator?before=additions">
          <command
                commandId="com.sogeti.rental.ui.commands.displayCommand"
-               label="Hello World"
+               label="%command.label.1"
                style="push">
          </command>
       </menuContribution>
@@ -86,7 +92,7 @@
             locationURI="toolbar:com.sogeti.rental.ui.views.rentalAgencyView?before=additions">
          <command
                commandId="com.sogeti.rental.ui.commands.displayCommand"
-               label="Hello World"
+               label="%command.label.2"
                style="push">
          </command>
       </menuContribution>
@@ -95,7 +101,7 @@
             locationURI="menu:com.sogeti.rental.ui.views.rentalAgencyView?after=additions">
          <command
                commandId="com.sogeti.rental.ui.commands.displayCommand"
-               label="Hello World"
+               label="%command.label.3"
                style="push">
          </command>
       </menuContribution>
@@ -105,7 +111,7 @@
       <command
             categoryId="com.sogeti.rental.ui.cmd.category"
             id="com.sogeti.rental.ui.commands.displayCommand"
-            name="Display Command">
+            name="%command.name">
       </command>
    </extension>
    <extension
@@ -119,12 +125,12 @@
          point="com.sogeti.rental.ui.palette">
       <palette
             id="com.sogeti.rental.ui.paletteDefault"
-            name="Default Palette"
+            name="%palette.name"
             paletteClass="com.sogeti.rental.ui.palette.DefaultPalette">
       </palette>
       <palette
             id="com.sogeti.rental.ui.paletteMoche"
-            name="Moche Palette"
+            name="%palette.name.0"
             paletteClass="com.sogeti.rental.ui.palette.PaletteMochePalette">
       </palette>
    </extension>

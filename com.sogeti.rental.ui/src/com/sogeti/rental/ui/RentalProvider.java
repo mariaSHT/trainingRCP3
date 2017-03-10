@@ -178,24 +178,30 @@ class RentalProvider extends LabelProvider implements ITreeContentProvider, ICol
 
 	@Override
 	public Color getForeground(Object element) {
-		if (element instanceof Customer) {
-
-			String lColorV = RentalUIActivator.getDefault().getPreferenceStore().getString(RentalColorPreferences.PREF_CUSTOMERCOLOR);
-			Color lColor = RentalUIActivator.getDefault().getColor(lColorV);
-			return lColor;
-		}
-		else if (element instanceof RentalObject) {
-			String lColorVR = RentalUIActivator.getDefault().getPreferenceStore().getString(RentalColorPreferences.PREF_OBJECTSCOLOR);
-			Color lColorR = RentalUIActivator.getDefault().getColor(lColorVR);
-			return lColorR;
-		}
-		else if (element instanceof Rental) {
-			String lColorV = RentalUIActivator.getDefault().getPreferenceStore().getString(RentalColorPreferences.PREF_RENTALCOLOR);
-			Color lColor = RentalUIActivator.getDefault().getColor(lColorV);
-			return lColor;
-		}
 		
-		return null;
+		String palId = RentalUIActivator.getDefault().getPreferenceStore().getString("PREF_PALETTE");
+		PaletteDescriptor lPD = RentalUIActivator.getDefault().getPaletteDesc(palId);
+		
+		return lPD == null ? null :lPD.getCp().getForeground(element);
+		
+//		if (element instanceof Customer) {
+//
+//			String lColorV = RentalUIActivator.getDefault().getPreferenceStore().getString(RentalColorPreferences.PREF_CUSTOMERCOLOR);
+//			Color lColor = RentalUIActivator.getDefault()fault().getColor(lColorV);
+//			return lColor;
+//		}
+//		else if (element instanceof RentalObject) {
+//			String lColorVR = RentalUIActivator.getDefault().getPreferenceStore().getString(RentalColorPreferences.PREF_OBJECTSCOLOR);
+//			Color lColorR = RentalUIActivator.getDefault().getColor(lColorVR);
+//			return lColorR;
+//		}
+//		else if (element instanceof Rental) {
+//			String lColorV = RentalUIActivator.getDefault().getPreferenceStore().getString(RentalColorPreferences.PREF_RENTALCOLOR);
+//			Color lColor = RentalUIActivator.getDefault().getColor(lColorV);
+//			return lColor;
+//		}
+//		
+//		return null;
 	}
 
 	@Override

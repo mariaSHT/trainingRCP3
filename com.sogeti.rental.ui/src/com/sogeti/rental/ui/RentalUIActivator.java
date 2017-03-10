@@ -32,6 +32,14 @@ public class RentalUIActivator extends AbstractUIPlugin implements RentalUIConst
 	
 	private Map<String, PaletteDescriptor> paletteMap;
 	
+	public PaletteDescriptor getPaletteDesc(String pId) {
+		return paletteMap.get(pId);
+	}
+	
+	public Map<String, PaletteDescriptor> getPaletteMap() {
+		return paletteMap;
+	}
+
 	/**
 	 * The constructor
 	 */
